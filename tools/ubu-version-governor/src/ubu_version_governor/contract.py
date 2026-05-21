@@ -26,6 +26,7 @@ class PushSpec:
     remote: str = "origin"
     branches: bool = True
     tags: bool = True
+    force_with_lease: bool = False
 
 
 @dataclass(frozen=True)
@@ -148,6 +149,7 @@ def load_contract(path: str | Path) -> VersionContract:
             remote=str(push_raw.get("remote") or "origin"),
             branches=bool(push_raw.get("branches", True)),
             tags=bool(push_raw.get("tags", True)),
+            force_with_lease=bool(push_raw.get("forceWithLease", False)),
         ),
         safety=SafetySpec(
             require_clean_working_tree=bool(safety_raw.get("requireCleanWorkingTree", True)),

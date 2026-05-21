@@ -41,7 +41,8 @@
     "enabled": true,
     "remote": "origin",
     "branches": true,
-    "tags": true
+    "tags": true,
+    "forceWithLease": true
   },
   "safety": {
     "requireCleanWorkingTree": false,

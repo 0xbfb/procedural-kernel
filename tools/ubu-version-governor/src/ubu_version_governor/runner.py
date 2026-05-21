@@ -74,8 +74,10 @@ def apply_contract(contract: VersionContract, *, repo: Path, apply: bool, push: 
         if not contract.push.enabled:
             raise RunnerError("Push solicitado, mas push.enabled=false no contrato.")
         if contract.push.branches:
+            if contract.push.force_with_lease:
+                git.fetch(contract.push.remote)
             for branch in dict.fromkeys(promoted_branches):
-                git.push_branch(contract.push.remote, branch)
+                git.push_branch(contract.push.remote, branch, force_with_lease=contract.push.force_with_lease)
         if contract.push.tags:
             git.push_tags(contract.push.remote)
     else:

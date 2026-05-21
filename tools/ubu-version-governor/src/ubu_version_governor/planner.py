@@ -54,7 +54,8 @@ def build_plan(contract: VersionContract, *, push_requested: bool = False) -> Pl
             branches = [contract.branch_for(target) for target in contract.promote_to]
             if release_branch not in branches:
                 branches.insert(0, release_branch)
-            steps.append(f"Push de branches para {contract.push.remote}: {', '.join(dict.fromkeys(branches))}.")
+            modo = "com --force-with-lease" if contract.push.force_with_lease else "fast-forward/normal"
+            steps.append(f"Push de branches para {contract.push.remote} ({modo}): {', '.join(dict.fromkeys(branches))}.")
         if contract.push.tags:
             steps.append(f"Push de tags para {contract.push.remote}.")
     else:

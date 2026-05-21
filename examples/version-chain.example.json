@@ -2,18 +2,18 @@
   "schemaVersion": "1.0",
   "project": {
     "name": "procedural-kernel",
-    "version": "0.1.2",
-    "repository": ""
+    "version": "0.1.3",
+    "repository": "https://github.com/0xbfb/procedural-kernel"
   },
   "release": {
     "channel": "release",
-    "targetVersion": "0.1.2",
+    "targetVersion": "0.1.3",
     "promoteTo": [
       "release",
       "nightly"
     ],
     "tagPrefix": "v",
-    "tagMessage": "Release 0.1.2 — UBU ISO/3.0 + ISO/3.1E"
+    "tagMessage": "Release 0.1.3 — UBU ISO suite sync e patch de arquivos faltantes"
   },
   "branches": {
     "patch": "patch/{version}",
@@ -23,7 +23,7 @@
   },
   "commits": [
     {
-      "message": "chore(release): prepare procedural-kernel 0.1.2",
+      "message": "chore(release): prepare procedural-kernel 0.1.3",
       "include": [
         "."
       ],
@@ -35,7 +35,9 @@
     "validation": [
       "make test",
       "make doctor",
-      "python scripts/validate_version_chain.py docs/releases/version-chain.json"
+      "make validate-version-chain",
+      "make version-plan",
+      "make final-contract"
     ],
     "afterAll": []
   },
@@ -43,7 +45,8 @@
     "enabled": false,
     "remote": "origin",
     "branches": true,
-    "tags": true
+    "tags": true,
+    "forceWithLease": true
   },
   "safety": {
     "requireCleanWorkingTree": false,
@@ -52,7 +55,7 @@
     "allowBranchReset": false
   },
   "docs": {
-    "releaseNotesPath": "docs/releases/RELEASE-0.1.2.md",
-    "patchNotesPath": "docs/releases/PATCH-0.1.2.md"
+    "releaseNotesPath": "docs/releases/RELEASE-0.1.3.md",
+    "patchNotesPath": "docs/releases/PATCH-0.1.3.md"
   }
 }

@@ -1,3 +1,57 @@
-[21/05/2026  7:16:43,60] Inicio da instalacao 
-error: pathspec 'release/0.1.2' did not match any file(s) known to git
-[21/05/2026  7:17:22,76] ERRO: falha na instalacao 
+[21/05/2026 11:23:28,81] Inicio da instalacao 
+Requirement already satisfied: pip in .\.venv\Lib\site-packages (26.1.1)
+Obtaining file:///C:/Users/ti/OneDrive/Documentos/Code/ubu/procedural-kernel
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Checking if build backend supports build_editable: started
+  Checking if build backend supports build_editable: finished with status 'done'
+  Getting requirements to build editable: started
+  Getting requirements to build editable: finished with status 'done'
+  Installing backend dependencies: started
+  Installing backend dependencies: finished with status 'done'
+  Preparing editable metadata (pyproject.toml): started
+  Preparing editable metadata (pyproject.toml): finished with status 'done'
+Requirement already satisfied: numpy>=2.0 in .\.venv\Lib\site-packages (from procedural-kernel==0.1.2) (2.4.6)
+Requirement already satisfied: orjson>=3.10 in .\.venv\Lib\site-packages (from procedural-kernel==0.1.2) (3.11.9)
+Requirement already satisfied: pydantic>=2.0 in .\.venv\Lib\site-packages (from procedural-kernel==0.1.2) (2.13.4)
+Requirement already satisfied: pytest>=8.0 in .\.venv\Lib\site-packages (from procedural-kernel==0.1.2) (9.0.3)
+Requirement already satisfied: ruff>=0.8 in .\.venv\Lib\site-packages (from procedural-kernel==0.1.2) (0.15.13)
+Requirement already satisfied: annotated-types>=0.6.0 in .\.venv\Lib\site-packages (from pydantic>=2.0->procedural-kernel==0.1.2) (0.7.0)
+Requirement already satisfied: pydantic-core==2.46.4 in .\.venv\Lib\site-packages (from pydantic>=2.0->procedural-kernel==0.1.2) (2.46.4)
+Requirement already satisfied: typing-extensions>=4.14.1 in .\.venv\Lib\site-packages (from pydantic>=2.0->procedural-kernel==0.1.2) (4.15.0)
+Requirement already satisfied: typing-inspection>=0.4.2 in .\.venv\Lib\site-packages (from pydantic>=2.0->procedural-kernel==0.1.2) (0.4.2)
+Requirement already satisfied: colorama>=0.4 in .\.venv\Lib\site-packages (from pytest>=8.0->procedural-kernel==0.1.2) (0.4.6)
+Requirement already satisfied: iniconfig>=1.0.1 in .\.venv\Lib\site-packages (from pytest>=8.0->procedural-kernel==0.1.2) (2.3.0)
+Requirement already satisfied: packaging>=22 in .\.venv\Lib\site-packages (from pytest>=8.0->procedural-kernel==0.1.2) (26.2)
+Requirement already satisfied: pluggy<2,>=1.5 in .\.venv\Lib\site-packages (from pytest>=8.0->procedural-kernel==0.1.2) (1.6.0)
+Requirement already satisfied: pygments>=2.7.2 in .\.venv\Lib\site-packages (from pytest>=8.0->procedural-kernel==0.1.2) (2.20.0)
+Building wheels for collected packages: procedural-kernel
+  Building editable for procedural-kernel (pyproject.toml): started
+  Building editable for procedural-kernel (pyproject.toml): finished with status 'done'
+  Created wheel for procedural-kernel: filename=procedural_kernel-0.1.2-py3-none-any.whl size=4151 sha256=95f73275b48808e62a52c0f878f79d511fe09bf85b76f682aa96f2998b5d619c
+  Stored in directory: C:\Users\ti\AppData\Local\Temp\pip-ephem-wheel-cache-4t4z8lu_\wheels\32\d6\6f\d8aef48790ad550abd6382f4771e6515be9f1144af0029457c
+Successfully built procedural-kernel
+Installing collected packages: procedural-kernel
+  Attempting uninstall: procedural-kernel
+    Found existing installation: procedural-kernel 0.1.2
+    Uninstalling procedural-kernel-0.1.2:
+      Successfully uninstalled procedural-kernel-0.1.2
+Successfully installed procedural-kernel-0.1.2
+Obtaining file:///C:/Users/ti/OneDrive/Documentos/Code/ubu/procedural-kernel/tools/ubu-version-governor
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Checking if build backend supports build_editable: started
+  Checking if build backend supports build_editable: finished with status 'done'
+  Getting requirements to build editable: started
+  Getting requirements to build editable: finished with status 'done'
+  Preparing editable metadata (pyproject.toml): started
+  Preparing editable metadata (pyproject.toml): finished with status 'done'
+Building wheels for collected packages: ubu-version-governor
+  Building editable for ubu-version-governor (pyproject.toml): started
+  Building editable for ubu-version-governor (pyproject.toml): finished with status 'done'
+  Created wheel for ubu-version-governor: filename=ubu_version_governor-0.1.0-0.editable-py3-none-any.whl size=2930 sha256=61e40c334a2cb340ade334f6f950accc9d6dda994be52ce354d9a826d41c0d3d
+  Stored in directory: C:\Users\ti\AppData\Local\Temp\pip-ephem-wheel-cache-ljxf6_qi\wheels\b7\17\fd\4a9c53d49d692d439fd101927f60affc94957ecf8a1ddcc594
+Successfully built ubu-version-governor
+Installing collected packages: ubu-version-governor
+Successfully installed ubu-version-governor-0.1.0
+[21/05/2026 11:23:53,77] Instalacao concluida 

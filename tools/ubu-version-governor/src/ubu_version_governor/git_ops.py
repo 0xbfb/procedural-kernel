@@ -90,8 +90,15 @@ class Git:
         else:
             self.run(["tag", tag])
 
-    def push_branch(self, remote: str, branch: str) -> None:
-        self.run(["push", remote, branch])
+    def fetch(self, remote: str) -> None:
+        self.run(["fetch", remote, "--prune"])
+
+    def push_branch(self, remote: str, branch: str, *, force_with_lease: bool = False) -> None:
+        args = ["push"]
+        if force_with_lease:
+            args.append("--force-with-lease")
+        args.extend([remote, branch])
+        self.run(args)
 
     def push_tags(self, remote: str) -> None:
         self.run(["push", remote, "--tags"])

@@ -3,79 +3,189 @@
   "$id": "https://ubu.local/schemas/ubu-version-chain.schema.json",
   "title": "UBU Version Chain Contract",
   "type": "object",
-  "required": ["schemaVersion", "project", "release", "branches", "commits", "push", "safety"],
+  "required": [
+    "schemaVersion",
+    "project",
+    "release",
+    "branches",
+    "commits",
+    "push",
+    "safety"
+  ],
   "properties": {
-    "schemaVersion": { "type": "string" },
+    "schemaVersion": {
+      "type": "string"
+    },
     "project": {
       "type": "object",
-      "required": ["name", "version"],
+      "required": [
+        "name",
+        "version"
+      ],
       "properties": {
-        "name": { "type": "string" },
-        "version": { "type": "string" },
-        "repository": { "type": "string" }
+        "name": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string"
+        },
+        "repository": {
+          "type": "string"
+        }
       }
     },
     "release": {
       "type": "object",
-      "required": ["channel", "targetVersion", "promoteTo"],
+      "required": [
+        "channel",
+        "targetVersion",
+        "promoteTo"
+      ],
       "properties": {
-        "channel": { "enum": ["patch", "release", "nightly", "stable"] },
-        "targetVersion": { "type": "string" },
+        "channel": {
+          "enum": [
+            "patch",
+            "release",
+            "nightly",
+            "stable"
+          ]
+        },
+        "targetVersion": {
+          "type": "string"
+        },
         "promoteTo": {
           "type": "array",
-          "items": { "enum": ["release", "nightly", "stable"] }
+          "items": {
+            "enum": [
+              "release",
+              "nightly",
+              "stable"
+            ]
+          }
         },
-        "tagPrefix": { "type": "string" },
-        "tagMessage": { "type": "string" }
+        "tagPrefix": {
+          "type": "string"
+        },
+        "tagMessage": {
+          "type": "string"
+        }
       }
     },
     "branches": {
       "type": "object",
-      "required": ["patch", "release", "nightly", "stable"],
+      "required": [
+        "patch",
+        "release",
+        "nightly",
+        "stable"
+      ],
       "properties": {
-        "patch": { "type": "string" },
-        "release": { "type": "string" },
-        "nightly": { "type": "string" },
-        "stable": { "type": "string" }
+        "patch": {
+          "type": "string"
+        },
+        "release": {
+          "type": "string"
+        },
+        "nightly": {
+          "type": "string"
+        },
+        "stable": {
+          "type": "string"
+        }
       }
     },
     "commits": {
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["message"],
+        "required": [
+          "message"
+        ],
         "properties": {
-          "message": { "type": "string" },
-          "include": { "type": "array", "items": { "type": "string" } },
-          "allowEmpty": { "type": "boolean" }
+          "message": {
+            "type": "string"
+          },
+          "include": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "allowEmpty": {
+            "type": "boolean"
+          }
         }
       }
     },
     "commands": {
       "type": "object",
       "properties": {
-        "beforeAll": { "type": "array", "items": { "type": "string" } },
-        "validation": { "type": "array", "items": { "type": "string" } },
-        "afterAll": { "type": "array", "items": { "type": "string" } }
+        "beforeAll": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "validation": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "afterAll": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
       }
     },
     "push": {
       "type": "object",
-      "required": ["enabled", "remote", "branches", "tags"],
+      "required": [
+        "enabled",
+        "remote",
+        "branches",
+        "tags"
+      ],
       "properties": {
-        "enabled": { "type": "boolean" },
-        "remote": { "type": "string" },
-        "branches": { "type": "boolean" },
-        "tags": { "type": "boolean" }
+        "enabled": {
+          "type": "boolean"
+        },
+        "remote": {
+          "type": "string"
+        },
+        "branches": {
+          "type": "boolean"
+        },
+        "tags": {
+          "type": "boolean"
+        },
+        "forceWithLease": {
+          "type": "boolean",
+          "default": false,
+          "description": "Usa git push --force-with-lease para branches de promocao ja existentes."
+        }
       }
     },
     "safety": {
       "type": "object",
       "properties": {
-        "requireCleanWorkingTree": { "type": "boolean" },
-        "requireBranch": { "type": ["string", "null"] },
-        "allowBranchCreate": { "type": "boolean" },
-        "allowBranchReset": { "type": "boolean" }
+        "requireCleanWorkingTree": {
+          "type": "boolean"
+        },
+        "requireBranch": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "allowBranchCreate": {
+          "type": "boolean"
+        },
+        "allowBranchReset": {
+          "type": "boolean"
+        }
       }
     }
   }
