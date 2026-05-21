@@ -1,0 +1,7 @@
+services:
+  ubu-version-governor:
+    build: .
+    working_dir: /app
+    volumes:
+      - .:/app
+    command: python -m ubu_version_governor plan --input examples/version-chain.example.json

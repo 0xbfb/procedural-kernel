@@ -1,0 +1,58 @@
+{
+  "schemaVersion": "1.0",
+  "project": {
+    "name": "procedural-kernel",
+    "version": "0.1.2",
+    "repository": ""
+  },
+  "release": {
+    "channel": "release",
+    "targetVersion": "0.1.2",
+    "promoteTo": [
+      "release",
+      "nightly"
+    ],
+    "tagPrefix": "v",
+    "tagMessage": "Release 0.1.2 — UBU ISO/3.0 + ISO/3.1E"
+  },
+  "branches": {
+    "patch": "patch/{version}",
+    "release": "release/{version}",
+    "nightly": "nightly",
+    "stable": "stable"
+  },
+  "commits": [
+    {
+      "message": "chore(release): prepare procedural-kernel 0.1.2",
+      "include": [
+        "."
+      ],
+      "allowEmpty": false
+    }
+  ],
+  "commands": {
+    "beforeAll": [],
+    "validation": [
+      "make test",
+      "make doctor",
+      "python scripts/validate_version_chain.py docs/releases/version-chain.json"
+    ],
+    "afterAll": []
+  },
+  "push": {
+    "enabled": false,
+    "remote": "origin",
+    "branches": true,
+    "tags": true
+  },
+  "safety": {
+    "requireCleanWorkingTree": false,
+    "requireBranch": null,
+    "allowBranchCreate": true,
+    "allowBranchReset": false
+  },
+  "docs": {
+    "releaseNotesPath": "docs/releases/RELEASE-0.1.2.md",
+    "patchNotesPath": "docs/releases/PATCH-0.1.2.md"
+  }
+}
