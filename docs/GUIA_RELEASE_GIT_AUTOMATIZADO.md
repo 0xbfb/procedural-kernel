@@ -1,116 +1,67 @@
-# Guia — Release Git Automatizado
+# Guia de release Git automatizado
 
-Este projeto usa o padrão **UBU Suite 0.3.1** para padronizar releases Git sem alterar código de aplicação.
+## Arquivos
 
-## Repo oficial do kit
+- `release.ps1`: disparador curto na raiz do projeto.
+- `tools/release/git-release.ps1`: orquestrador completo.
+- `.env.example`: modelo de configuração local.
+- `release.config.json`: configuração geral versionada com metadados da última release/patch.
 
-```text
-https://github.com/0xbfb/ubu-suite.git
-```
-
-## Fluxo esperado
-
-```text
-dev -> release/<versao> -> nightly -> stable -> tag
-```
-
-## 1. Configurar `.env` local
+## Uso básico
 
 ```powershell
 Copy-Item .env.example .env
 notepad .env
+./release.ps1 -Version 0.2.4 -DryRun
+./release.ps1 -Version 0.2.4
 ```
 
-Exemplo de `.env` local:
-
-```env
-UBU_PROJECT_REPO_URL=https://github.com/owner/project.git
-UBU_KIT_REPO_URL=https://github.com/0xbfb/ubu-suite.git
-UBU_SOURCE_BRANCH=dev
-UBU_RELEASE_BRANCH_PREFIX=release/
-UBU_NIGHTLY_BRANCH=nightly
-UBU_STABLE_BRANCH=stable
-```
-
-## 2. Testar release sem push
+## Uso com flags
 
 ```powershell
-.\release.ps1 `
-  -Version 0.3.1 `
-  -RepoUrl https://github.com/owner/project.git `
+./release.ps1 `
+  -Version 0.2.4 `
+  -RepoUrl https://github.com/owner/repo.git `
+  -ReleaseKind release `
+  -Title "UBU orchestration suite" `
+  -Description "Suite com automação de release Git, prompts e templates atualizados"
+```
+
+## Patch
+
+```powershell
+./release.ps1 `
+  -Version 0.2.4 `
+  -RepoUrl https://github.com/owner/repo.git `
   -ReleaseKind patch `
-  -PatchTitle "Atualizacao para UBU Suite 0.3.1" `
-  -PatchDescription "Padroniza release governor, RepoUrl oficial do kit, estrutura dev-only do versionador e ISO 3.1" `
-  -DryRun
+  -PatchTitle "Correção do disparador de release" `
+  -PatchDescription "Ajusta o script PowerShell e atualiza metadados do pacote"
 ```
 
-## 3. Rodar release real
+## Configuração geral
 
-```powershell
-.\release.ps1 `
-  -Version 0.3.1 `
-  -RepoUrl https://github.com/owner/project.git `
-  -ReleaseKind patch `
-  -PatchTitle "Atualizacao para UBU Suite 0.3.1" `
-  -PatchDescription "Padroniza release governor, RepoUrl oficial do kit, estrutura dev-only do versionador e ISO 3.1" `
-  -Force
-```
+A cada execução, salvo com `-SkipConfigUpdate`, o script atualiza `release.config.json` com:
 
-## 4. Migrar projeto antigo a partir do kit
+- tipo do lançamento: `release` ou `patch`;
+- versão;
+- título;
+- descrição;
+- tag;
+- branches usadas;
+- remoto;
+- mensagem de commit;
+- histórico limitado às últimas 50 execuções.
 
-Rodar a partir da raiz do kit UBU Suite 0.3.1:
+## Cadeia de promoção
 
-```powershell
-.\patch-legacy.ps1 `
-  -TargetPath "C:\caminho\do\projeto-antigo" `
-  -RepoUrl "https://github.com/owner/project.git" `
-  -Version 0.3.1 `
-  -Title "Atualizacao para UBU Suite 0.3.1" `
-  -Description "Adiciona release governor, RepoUrl oficial do kit, ISO 3.1 e estrutura dev-only do versionador" `
-  -Force
-```
-
-## 5. Validar versionador dev-only
-
-```powershell
-git ls-files dev/versionador
-```
-
-Resultado esperado:
+O script prepara e publica, salvo com `-NoPush`, a cadeia:
 
 ```text
-dev/versionador/.gitignore
-dev/versionador/README.md
+release/<versao> -> nightly -> stable
 ```
 
-Se aparecer qualquer outro arquivo dentro de `dev/versionador`, remova do tracking:
+A branch base padrão é `dev`.
 
-```powershell
-git rm --cached -r dev/versionador
-git add dev/versionador/.gitignore dev/versionador/README.md .gitignore
-git commit -m "chore: keep versionador as dev-only ignored structure"
-```
+## Proteção do versionador
 
-## 6. Validar ausência de `working-tree-encoding` inválido
-
-```powershell
-Select-String -Path .gitattributes -Pattern "working-tree-encoding"
-```
-
-Resultado esperado: nenhum resultado.
-
-## 7. Validar scripts principais
-
-```powershell
-Select-String -Path .\release.ps1 -Pattern "0.3.1"
-Select-String -Path .\tools\release\git-release.ps1 -Pattern "0.3.1"
-Select-String -Path .\patch-legacy.ps1 -Pattern "0.3.1"
-Select-String -Path .\tools\patch\update-legacy-project.ps1 -Pattern "0.3.1"
-```
-
-## 8. Validar status antes do commit
-
-```powershell
-git status --short
-git diff -- .gitattributes .gitignore release.config.json release.ps1 patch-legacy.ps1
-```
+A pasta `dev/versionador` é preservada apenas como estrutura dev-only. O script garante `.gitignore` interno e falha caso arquivos reais do versionador estejam versionados.

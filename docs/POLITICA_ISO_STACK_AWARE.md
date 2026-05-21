@@ -1,32 +1,35 @@
-# Política — ISO stack-aware
+# Política — ISO sensível à stack e sem excesso
 
-A UBU Suite 0.3.1 deve respeitar a stack real do projeto.
+As ISOs devem aumentar previsibilidade, não criar peso morto.
+
+A aplicação de ISO deve detectar a stack real do projeto e gerar somente arquivos úteis, executáveis e compatíveis com o fluxo do projeto.
 
 ## Regra principal
 
-Não adicionar inicializadores, instaladores, Docker, Makefile ou scripts de bootstrap por padrão.
+Não criar Dockerfile, `docker-compose.yml`, Makefile, `install.bat`, `run.bat` ou scripts auxiliares apenas porque existem templates.
 
-## Proibido adicionar sem necessidade real
+Esses arquivos só devem ser criados quando pelo menos uma condição for verdadeira:
 
-```text
-Dockerfile
-docker-compose.yml
-Makefile
-install.bat
-run.bat
-scripts de instalação genéricos
-```
+1. o projeto já usa o arquivo;
+2. a stack exige ou se beneficia diretamente dele;
+3. o escopo pede instalação/execução por esse caminho;
+4. o ambiente alvo exige;
+5. existe critério de aceite que dependa dele.
 
-## Permitido nesta migração
+## Quando dispensar
 
-A migração UBU Suite 0.3.1 pode adicionar apenas arquivos de governança de release, documentação, configuração e proteção dev-only do versionador.
+A dispensa de um arquivo opcional não é erro. É uma decisão técnica normal.
 
-## Preservação
+Registre no manifesto:
 
-A migração não deve alterar:
+- arquivo considerado;
+- motivo da dispensa;
+- comando alternativo oficial;
+- risco, se existir.
 
-- regra de negócio;
-- código de aplicação;
-- dependências da stack;
-- runtime da aplicação;
-- scripts existentes que pertençam ao projeto.
+## Exemplos
+
+- Projeto Python CLI simples: pode usar `pyproject.toml`, `python -m pip install -e .`, `python -m pytest` e dispensar Docker/Makefile.
+- Projeto Node/Vite: pode usar `package.json` com scripts `install`, `dev`, `build`, `test` e dispensar Makefile.
+- Projeto Laravel já dockerizado: deve validar Docker existente, mas não criar outro compose paralelo.
+- Projeto Windows para usuário final: pode usar `install.bat`/`run.bat`, mas somente se esse for o fluxo real do usuário.

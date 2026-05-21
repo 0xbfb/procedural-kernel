@@ -1,20 +1,30 @@
 [CmdletBinding()]
 param(
-    [string]$TargetPath = '.',
+    [string]$TargetPath = ".",
     [string]$RepoUrl,
-    [string]$Version = '0.3.1',
-    [string]$Title = 'Atualizacao para UBU Suite 0.3.1',
-    [string]$Description = 'Adiciona release governor, RepoUrl oficial do kit, ISO 3.1 e estrutura dev-only do versionador',
+    [string]$OfficialKitRepoUrl,
+    [string]$Version = "0.3.5",
+    [ValidateSet("release", "patch")]
+    [string]$ReleaseKind = "patch",
+    [string]$Title = "Atualizacao para UBU Suite 0.3.5",
+    [string]$Description = "Adiciona release governor config-first, RepoUrl oficial do kit, autoatualizacao do governor e estrutura dev-only do versionador.",
     [switch]$DryRun,
     [switch]$Force
 )
 
-$ErrorActionPreference = 'Stop'
-$scriptPath = Join-Path $PSScriptRoot 'tools/patch/update-legacy-project.ps1'
+$ErrorActionPreference = "Stop"
+$WrapperVersion = "0.3.5"
+$ScriptPath = Join-Path $PSScriptRoot "tools/patch/update-legacy-project.ps1"
 
-if (-not (Test-Path -LiteralPath $scriptPath)) {
-    throw "Script de patch legado nao encontrado: $scriptPath"
+Write-Host "==> UBU legacy patch wrapper $WrapperVersion"
+
+if ([string]::IsNullOrWhiteSpace($TargetPath)) {
+    throw "TargetPath vazio. Use -TargetPath (Get-Location).Path, -TargetPath . ou informe o caminho absoluto do projeto alvo. Verifique tambem se voce nao digitou `$PDW em vez de `$PWD."
 }
 
-& $scriptPath @PSBoundParameters
+if (-not (Test-Path -LiteralPath $ScriptPath)) {
+    throw "Script de patch legado nao encontrado em: $ScriptPath"
+}
+
+& $ScriptPath @PSBoundParameters
 exit $LASTEXITCODE

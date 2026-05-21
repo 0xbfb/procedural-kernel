@@ -1,34 +1,39 @@
 # Política — Versionador dev-only
 
-O versionador é ferramenta somente de desenvolvimento.
+O versionador é uma ferramenta de desenvolvimento local para automatizar ou auxiliar o fluxo `patch > release > nightly > stable`.
 
-Ele não deve subir completo em:
+Ele não é parte do produto final, não é dependência de runtime e não deve ser empacotado em patches de implementação.
 
-- patches;
-- releases;
-- branches `release/*`;
-- `nightly`;
-- `stable`;
-- tags.
+## Pode ser versionado
 
-Apenas estes arquivos podem ser versionados:
+- contratos JSON consumidos pelo versionador;
+- exemplos sanitizados;
+- documentação de uso;
+- manifestos de release;
+- `.gitignore` e estrutura mínima de pasta.
 
-```text
-dev/versionador/.gitignore
-dev/versionador/README.md
-```
+## Não pode ser versionado em patches/release
 
-Todo binário, runtime, build, cache, zip, script gerado ou executável real do versionador deve permanecer ignorado.
+- executável do versionador;
+- builds locais;
+- caches;
+- bancos locais;
+- logs;
+- artefatos `.zip` gerados;
+- credenciais;
+- scripts locais que executem comandos destrutivos sem revisão.
 
-## Validação
+## Checklist obrigatório em patch
 
-```powershell
-git ls-files dev/versionador
-```
+- [ ] `dev/versionador/*` continua ignorado.
+- [ ] Nenhum binário do versionador entrou no zip.
+- [ ] Nenhum cache/log/runtime do versionador entrou no zip.
+- [ ] `PATCH_MANIFEST.md` informa quando algum contrato do versionador foi incluído.
+- [ ] `RELEASE_NOTES.md` do release final não trata o versionador como dependência do produto.
 
-Resultado esperado:
 
-```text
-dev/versionador/.gitignore
-dev/versionador/README.md
-```
+## Distinção importante
+
+O script `tools/release/git-release.ps1` e o disparador `release.ps1` são automações versionáveis de publicação Git. Eles não são o programa local do versionador.
+
+O programa real do versionador continua restrito a `dev/versionador` e deve permanecer ignorado, exceto por `.gitignore` e `README.md`.

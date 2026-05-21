@@ -1,4 +1,4 @@
-# Python
+﻿# Python
 __pycache__/
 *.py[cod]
 *.pyo
@@ -44,3 +44,13 @@ Thumbs.db
 # O versionador/governor deve existir apenas na maquina de desenvolvimento.
 # Ele nao deve ser commitado dentro dos patches/releases deste projeto.
 tools/ubu-version-governor/
+
+# UBU dev-only versionador
+# O programa real do versionador nunca deve subir em patches/releases.
+.env
+.env.local
+.env.*.local
+dev/versionador/*
+!dev/versionador/.gitignore
+!dev/versionador/README.md
+

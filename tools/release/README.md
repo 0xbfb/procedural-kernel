@@ -72,3 +72,69 @@ A pasta `dev/versionador` é preservada apenas como estrutura dev-only. O script
 A partir da versao 0.2.6, o orquestrador executa `git fetch origin --prune --tags` antes do push para evitar rejeicao por `stale info` quando o remoto ja tem branches que a copia local ainda nao conhece.
 
 Se o remoto tiver historico que nao deve ser sobrescrito, rode primeiro com `-DryRun` e revise `git log --oneline --graph --all --decorate` antes de usar `-Force`.
+
+## UBU Suite 0.3.3 — Prompt 2: release sem flags
+
+A partir desta etapa, o fluxo padrão passa a ser orientado por `release.config.json`.
+
+Uso normal:
+
+```powershell
+.\release.ps1 -DryRun
+.\release.ps1
+```
+
+As flags continuam existindo para override, mas não são mais necessárias quando `release.config.json` estiver completo.
+
+Prioridade de resolução:
+
+```text
+flags > .env > release.config.json > defaults seguros
+```
+
+Campos mínimos esperados no JSON:
+
+- `project.repoUrl`
+- `currentRelease.version`
+- `currentRelease.kind`
+- `currentRelease.title`
+- `currentRelease.description`
+- `currentRelease.tag`
+- `currentRelease.targetReleaseBranch`
+- `kit.officialRepoUrl`
+
+O auto-update real do governor será implementado no Prompt 3. Nesta etapa, `-SkipKitUpdate` já existe como flag compatível, mas a checagem remota ainda não executa atualização.
+
+## Auto-update antes do release
+
+A partir do Prompt 3 da 0.3.3, `release.ps1` chama `tools/governor/update-governor.ps1` antes deste orquestrador.
+
+Fluxo padrão:
+
+```powershell
+.\release.ps1 -DryRun
+.\release.ps1
+```
+
+Para emergência:
+
+```powershell
+.\release.ps1 -SkipKitUpdate
+```
+
+
+## Formato 0.3.3 config-first
+
+Preencha `release.config.json` e publique com:
+
+```powershell
+.\release.ps1
+```
+
+Ou via BAT:
+
+```bat
+release.bat
+```
+
+As flags continuam disponíveis apenas como overrides.
