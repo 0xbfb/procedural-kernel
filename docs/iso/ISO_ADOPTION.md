@@ -1,35 +1,17 @@
-# Adoção UBU ISO — Procedural Kernel 0.1.2
+# Adoção UBU ISO — Procedural Kernel 0.1.3
 
-Esta release adiciona os padrões operacionais restantes da suíte UBU:
+## ISOs adotadas
 
-- UBU-ISO/3.0 — inicializadores, bootstrap e contrato mínimo de execução.
-- UBU-ISO/3.1E — esteira patch > release > nightly > stable.
+- UBU-ISO/1.0 — Dados e camadas
+- UBU-ISO/2.0 — Documentação técnica
+- UBU-ISO/2.1 — Instalação BAT
+- UBU-ISO/3.0 — Inicializadores e bootstrap
+- UBU-ISO/3.1E — Commit e versionamento
 
-## Decisões assumidas
+## Atualização 0.1.3
 
-- A versão desta release é `0.1.2`.
-- A promoção proposta no contrato padrão é `release` e `nightly`.
-- `stable` fica fora da promoção automática inicial para reduzir risco.
-- `push.enabled=false` no contrato inicial. Push real deve ser opt-in.
-- `tools/ubu-version-governor` é incluído como ferramenta local vendorizada para evitar dependência externa no primeiro ciclo.
+A release `0.1.3` sincroniza a documentação com a suíte ISO completa do kit mais recente e separa o versionador completo como ferramenta dev-only.
 
-## Arquivos centrais
+## Política
 
-- `docs/releases/version-chain.json`
-- `schemas/ubu-version-chain.schema.json`
-- `scripts/validate_version_chain.py`
-- `scripts/version/plan_version_chain.py`
-- `Makefile`
-- `Dockerfile`
-- `docker-compose.yml`
-- `install.bat`
-- `run.bat`
-
-## Fluxo recomendado
-
-```bash
-python scripts/validate_version_chain.py docs/releases/version-chain.json
-python scripts/version/plan_version_chain.py
-```
-
-Execução real de branch/tag/push deve ser feita apenas dentro de um clone Git revisado.
+O projeto deve versionar contratos, schemas e scripts pequenos de suporte. Ferramentas completas de versionamento devem permanecer fora do patch/release e podem existir apenas localmente.

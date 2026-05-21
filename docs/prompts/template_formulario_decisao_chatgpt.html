@@ -1,0 +1,995 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title>{{FORM_TITLE}}</title>
+
+  <style>
+    :root {
+      --bg: #f6f7fb;
+      --card: #ffffff;
+      --text: #172033;
+      --muted: #667085;
+      --border: #d0d5dd;
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
+      --danger: #b42318;
+      --success: #047857;
+      --shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
+      --radius: 16px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.45;
+    }
+
+    .app {
+      width: min(1060px, calc(100% - 32px));
+      margin: 32px auto;
+    }
+
+    header {
+      background: linear-gradient(135deg, #111827, #1e3a8a);
+      color: white;
+      padding: 28px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      margin-bottom: 20px;
+    }
+
+    header h1 {
+      margin: 0 0 8px;
+      font-size: clamp(1.6rem, 3vw, 2.4rem);
+    }
+
+    header p {
+      margin: 0;
+      max-width: 860px;
+      color: rgba(255,255,255,0.86);
+    }
+
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 18px;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 0.84rem;
+      background: rgba(255,255,255,0.14);
+      color: rgba(255,255,255,0.94);
+    }
+
+    .toolbar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(246, 247, 251, 0.9);
+      backdrop-filter: blur(10px);
+      padding: 12px 0;
+      margin-bottom: 16px;
+    }
+
+    .toolbar-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .progress-wrap {
+      flex: 1;
+      min-width: 240px;
+    }
+
+    .progress-label {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      font-size: 0.88rem;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    progress {
+      width: 100%;
+      height: 12px;
+      border: 0;
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    progress::-webkit-progress-bar {
+      background: #e5e7eb;
+      border-radius: 999px;
+    }
+
+    progress::-webkit-progress-value {
+      background: var(--primary);
+      border-radius: 999px;
+    }
+
+    progress::-moz-progress-bar {
+      background: var(--primary);
+      border-radius: 999px;
+    }
+
+    button {
+      border: 0;
+      border-radius: 12px;
+      padding: 10px 14px;
+      cursor: pointer;
+      font-weight: 700;
+      background: #e5e7eb;
+      color: #111827;
+    }
+
+    button:hover {
+      filter: brightness(0.97);
+    }
+
+    button.primary {
+      background: var(--primary);
+      color: white;
+    }
+
+    button.primary:hover {
+      background: var(--primary-dark);
+    }
+
+    button.danger {
+      background: #fee4e2;
+      color: var(--danger);
+    }
+
+    button.success {
+      background: #d1fae5;
+      color: var(--success);
+    }
+
+    main {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 18px;
+    }
+
+    section {
+      background: var(--card);
+      border: 1px solid rgba(208, 213, 221, 0.8);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 22px;
+    }
+
+    section h2 {
+      margin: 0 0 6px;
+      font-size: 1.25rem;
+    }
+
+    section .section-description {
+      margin: 0 0 18px;
+      color: var(--muted);
+    }
+
+    .question {
+      padding: 16px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      margin-top: 12px;
+      background: #fff;
+    }
+
+    .question-header {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: flex-start;
+      margin-bottom: 8px;
+    }
+
+    label.question-label {
+      display: block;
+      font-weight: 750;
+      margin-bottom: 4px;
+    }
+
+    .required {
+      color: var(--danger);
+      margin-left: 3px;
+    }
+
+    .help {
+      color: var(--muted);
+      font-size: 0.92rem;
+      margin: 4px 0 10px;
+    }
+
+    .question-type {
+      color: var(--muted);
+      font-size: 0.75rem;
+      background: #f2f4f7;
+      padding: 4px 8px;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    input[type="date"],
+    input[type="email"],
+    input[type="url"],
+    textarea,
+    select {
+      width: 100%;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 11px 12px;
+      font: inherit;
+      color: var(--text);
+      background: white;
+    }
+
+    textarea {
+      min-height: 104px;
+      resize: vertical;
+    }
+
+    .options {
+      display: grid;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .option {
+      display: flex;
+      gap: 9px;
+      align-items: flex-start;
+      padding: 10px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: #fcfcfd;
+    }
+
+    .option input {
+      margin-top: 4px;
+    }
+
+    .scale {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(44px, 1fr));
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .scale label {
+      text-align: center;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 9px 4px;
+      background: #fcfcfd;
+      cursor: pointer;
+    }
+
+    .scale input {
+      display: block;
+      margin: 0 auto 5px;
+    }
+
+    .matrix-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      margin-top: 10px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 620px;
+      background: white;
+    }
+
+    th, td {
+      border-bottom: 1px solid var(--border);
+      padding: 10px;
+      text-align: left;
+      vertical-align: middle;
+    }
+
+    th {
+      background: #f9fafb;
+      font-size: 0.9rem;
+    }
+
+    td:not(:first-child),
+    th:not(:first-child) {
+      text-align: center;
+    }
+
+    .decision-box {
+      background: #f8fafc;
+      border-left: 4px solid var(--primary);
+      padding: 14px;
+      border-radius: 12px;
+      margin-top: 16px;
+      color: #1f2937;
+    }
+
+    .json-preview {
+      white-space: pre-wrap;
+      word-break: break-word;
+      background: #101828;
+      color: #e5e7eb;
+      padding: 16px;
+      border-radius: 14px;
+      max-height: 360px;
+      overflow: auto;
+      font-size: 0.88rem;
+    }
+
+    footer {
+      margin-top: 20px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.88rem;
+    }
+
+    .error {
+      color: var(--danger);
+      font-size: 0.9rem;
+      margin-top: 8px;
+      display: none;
+    }
+
+    .is-invalid {
+      border-color: var(--danger) !important;
+      background: #fffafa !important;
+    }
+
+    @media (max-width: 720px) {
+      .app {
+        width: min(100% - 20px, 1060px);
+        margin: 18px auto;
+      }
+
+      header,
+      section {
+        padding: 18px;
+      }
+
+      .toolbar {
+        position: static;
+      }
+
+      .toolbar-actions {
+        width: 100%;
+      }
+
+      button {
+        flex: 1;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="app">
+    <header>
+      <h1 id="formTitle">{{FORM_TITLE}}</h1>
+      <p id="formDescription">{{FORM_DESCRIPTION}}</p>
+      <div class="meta" id="formMeta"></div>
+    </header>
+
+    <div class="toolbar">
+      <div class="progress-wrap">
+        <div class="progress-label">
+          <span>Progresso do preenchimento</span>
+          <strong id="progressText">0%</strong>
+        </div>
+        <progress id="progressBar" value="0" max="100"></progress>
+      </div>
+
+      <div class="toolbar-actions">
+        <button type="button" class="primary" id="copyJsonButton">Copiar JSON para área de transferência</button>
+        <button type="button" class="danger" id="resetButton">Limpar</button>
+      </div>
+    </div>
+
+    <main id="formRoot"></main>
+
+    <section>
+      <h2>Prévia do JSON</h2>
+      <p class="section-description">
+        A prévia abaixo é atualizada automaticamente enquanto o formulário é preenchido.
+      </p>
+      <pre class="json-preview" id="jsonPreview">{}</pre>
+    </section>
+
+    <footer>
+      Template HTML local. Nenhuma resposta é enviada para servidores externos. O JSON é copiado para a área de transferência pelo navegador.
+    </footer>
+  </div>
+
+  <script>
+    /**
+     * ===============================================================
+     * PLACEHOLDER PRINCIPAL
+     * ===============================================================
+     *
+     * O ChatGPT deve substituir o objeto abaixo por um schema real.
+     * Mantenha o formato geral:
+     *
+     * {
+     *   "id": "identificador_do_formulario",
+     *   "title": "Título do formulário",
+     *   "description": "Descrição objetiva",
+     *   "version": "1.0.0",
+     *   "context": {
+     *     "project": "Nome do projeto",
+     *     "decision": "Decisão a ser tomada",
+     *     "owner": "Responsável",
+     *     "generatedAt": "YYYY-MM-DD"
+     *   },
+     *   "sections": [
+     *     {
+     *       "id": "secao_1",
+     *       "title": "Título da seção",
+     *       "description": "Descrição da seção",
+     *       "questions": [
+     *         {
+     *           "id": "campo_unico",
+     *           "type": "text | textarea | number | date | email | url | select | radio | checkbox | scale | matrix",
+     *           "label": "Pergunta",
+     *           "help": "Texto de apoio opcional",
+     *           "required": true,
+     *           "placeholder": "Placeholder opcional",
+     *           "options": [
+     *             {"value": "opcao_a", "label": "Opção A"}
+     *           ],
+     *           "min": 1,
+     *           "max": 5,
+     *           "rows": [
+     *             {"value": "criterio_a", "label": "Critério A"}
+     *           ],
+     *           "columns": [
+     *             {"value": "baixo", "label": "Baixo"}
+     *           ]
+     *         }
+     *       ]
+     *     }
+     *   ],
+     *   "decisionGuidance": "Texto opcional explicando como usar as respostas."
+     * }
+     */
+    const FORM_SCHEMA = {
+      "id": "{{FORM_ID}}",
+      "title": "{{FORM_TITLE}}",
+      "description": "{{FORM_DESCRIPTION}}",
+      "version": "{{FORM_VERSION}}",
+      "context": {
+        "project": "{{PROJECT_NAME}}",
+        "decision": "{{DECISION_NAME}}",
+        "owner": "{{OWNER_NAME}}",
+        "generatedAt": "{{GENERATED_AT}}"
+      },
+      "sections": [
+        {
+          "id": "{{SECTION_ID}}",
+          "title": "{{SECTION_TITLE}}",
+          "description": "{{SECTION_DESCRIPTION}}",
+          "questions": [
+            {
+              "id": "{{QUESTION_ID}}",
+              "type": "textarea",
+              "label": "{{QUESTION_LABEL}}",
+              "help": "{{QUESTION_HELP_TEXT}}",
+              "required": true,
+              "placeholder": "{{QUESTION_PLACEHOLDER}}"
+            }
+          ]
+        }
+      ],
+      "decisionGuidance": "{{DECISION_GUIDANCE}}"
+    };
+
+    const state = {
+      answers: {},
+      touched: {}
+    };
+
+    const formRoot = document.getElementById("formRoot");
+    const jsonPreview = document.getElementById("jsonPreview");
+    const progressBar = document.getElementById("progressBar");
+    const progressText = document.getElementById("progressText");
+
+    function normalizeId(value) {
+      return String(value || "")
+        .trim()
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .replace(/[^a-z0-9]+/g, "_")
+        .replace(/^_+|_+$/g, "");
+    }
+
+    function escapeHtml(value) {
+      return String(value ?? "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    function getAllQuestions() {
+      return (FORM_SCHEMA.sections || []).flatMap(section => section.questions || []);
+    }
+
+    function optionLabel(option) {
+      return typeof option === "string" ? option : option.label;
+    }
+
+    function optionValue(option) {
+      return typeof option === "string" ? normalizeId(option) : option.value;
+    }
+
+    function renderMeta() {
+      const meta = document.getElementById("formMeta");
+      const context = FORM_SCHEMA.context || {};
+      const items = [
+        context.project ? `Projeto: ${context.project}` : "",
+        context.decision ? `Decisão: ${context.decision}` : "",
+        context.owner ? `Responsável: ${context.owner}` : "",
+        FORM_SCHEMA.version ? `Versão: ${FORM_SCHEMA.version}` : "",
+        context.generatedAt ? `Gerado em: ${context.generatedAt}` : ""
+      ].filter(Boolean);
+
+      meta.innerHTML = items.map(item => `<span class="tag">${escapeHtml(item)}</span>`).join("");
+    }
+
+    function renderForm() {
+      document.title = FORM_SCHEMA.title || "{{FORM_TITLE}}";
+      document.getElementById("formTitle").textContent = FORM_SCHEMA.title || "{{FORM_TITLE}}";
+      document.getElementById("formDescription").textContent = FORM_SCHEMA.description || "{{FORM_DESCRIPTION}}";
+
+      renderMeta();
+
+      formRoot.innerHTML = "";
+
+      (FORM_SCHEMA.sections || []).forEach(section => {
+        const sectionEl = document.createElement("section");
+        sectionEl.id = `section-${section.id}`;
+
+        const questionsHtml = (section.questions || [])
+          .map(question => renderQuestion(question))
+          .join("");
+
+        sectionEl.innerHTML = `
+          <h2>${escapeHtml(section.title || section.id)}</h2>
+          ${section.description ? `<p class="section-description">${escapeHtml(section.description)}</p>` : ""}
+          ${questionsHtml}
+        `;
+
+        formRoot.appendChild(sectionEl);
+      });
+
+      if (FORM_SCHEMA.decisionGuidance) {
+        const guidance = document.createElement("section");
+        guidance.innerHTML = `
+          <h2>Orientação para decisão</h2>
+          <div class="decision-box">${escapeHtml(FORM_SCHEMA.decisionGuidance)}</div>
+        `;
+        formRoot.appendChild(guidance);
+      }
+
+      bindInputs();
+      updateJsonPreview();
+    }
+
+    function renderQuestion(question) {
+      const type = question.type || "text";
+      const requiredMark = question.required ? `<span class="required">*</span>` : "";
+      const inputHtml = renderInput(question);
+
+      return `
+        <div class="question" data-question-id="${escapeHtml(question.id)}">
+          <div class="question-header">
+            <div>
+              <label class="question-label" for="${escapeHtml(question.id)}">
+                ${escapeHtml(question.label || question.id)}${requiredMark}
+              </label>
+              ${question.help ? `<p class="help">${escapeHtml(question.help)}</p>` : ""}
+            </div>
+            <span class="question-type">${escapeHtml(type)}</span>
+          </div>
+          ${inputHtml}
+          <div class="error" id="error-${escapeHtml(question.id)}">Campo obrigatório.</div>
+        </div>
+      `;
+    }
+
+    function renderInput(question) {
+      const id = escapeHtml(question.id);
+      const type = question.type || "text";
+      const placeholder = escapeHtml(question.placeholder || "");
+      const required = question.required ? "required" : "";
+
+      if (["text", "number", "date", "email", "url"].includes(type)) {
+        const min = question.min !== undefined ? `min="${escapeHtml(question.min)}"` : "";
+        const max = question.max !== undefined ? `max="${escapeHtml(question.max)}"` : "";
+
+        return `
+          <input
+            id="${id}"
+            name="${id}"
+            type="${escapeHtml(type)}"
+            placeholder="${placeholder}"
+            ${required}
+            ${min}
+            ${max}
+            data-question-id="${id}"
+          />
+        `;
+      }
+
+      if (type === "textarea") {
+        return `
+          <textarea
+            id="${id}"
+            name="${id}"
+            placeholder="${placeholder}"
+            ${required}
+            data-question-id="${id}"
+          ></textarea>
+        `;
+      }
+
+      if (type === "select") {
+        const options = (question.options || [])
+          .map(option => `<option value="${escapeHtml(optionValue(option))}">${escapeHtml(optionLabel(option))}</option>`)
+          .join("");
+
+        return `
+          <select id="${id}" name="${id}" ${required} data-question-id="${id}">
+            <option value="">Selecione...</option>
+            ${options}
+          </select>
+        `;
+      }
+
+      if (type === "radio") {
+        return `
+          <div class="options">
+            ${(question.options || []).map(option => `
+              <label class="option">
+                <input
+                  type="radio"
+                  name="${id}"
+                  value="${escapeHtml(optionValue(option))}"
+                  ${required}
+                  data-question-id="${id}"
+                />
+                <span>${escapeHtml(optionLabel(option))}</span>
+              </label>
+            `).join("")}
+          </div>
+        `;
+      }
+
+      if (type === "checkbox") {
+        return `
+          <div class="options">
+            ${(question.options || []).map(option => `
+              <label class="option">
+                <input
+                  type="checkbox"
+                  name="${id}"
+                  value="${escapeHtml(optionValue(option))}"
+                  data-question-id="${id}"
+                />
+                <span>${escapeHtml(optionLabel(option))}</span>
+              </label>
+            `).join("")}
+          </div>
+        `;
+      }
+
+      if (type === "scale") {
+        const min = Number(question.min ?? 1);
+        const max = Number(question.max ?? 5);
+        const values = Array.from({ length: max - min + 1 }, (_, index) => min + index);
+
+        return `
+          <div class="scale">
+            ${values.map(value => `
+              <label>
+                <input
+                  type="radio"
+                  name="${id}"
+                  value="${value}"
+                  ${required}
+                  data-question-id="${id}"
+                />
+                ${value}
+              </label>
+            `).join("")}
+          </div>
+        `;
+      }
+
+      if (type === "matrix") {
+        const rows = question.rows || [];
+        const columns = question.columns || [];
+
+        return `
+          <div class="matrix-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Critério</th>
+                  ${columns.map(column => `<th>${escapeHtml(optionLabel(column))}</th>`).join("")}
+                </tr>
+              </thead>
+              <tbody>
+                ${rows.map(row => {
+                  const rowValue = optionValue(row);
+                  return `
+                    <tr>
+                      <td>${escapeHtml(optionLabel(row))}</td>
+                      ${columns.map(column => `
+                        <td>
+                          <input
+                            type="radio"
+                            name="${id}__${escapeHtml(rowValue)}"
+                            value="${escapeHtml(optionValue(column))}"
+                            data-question-id="${id}"
+                            data-matrix-row="${escapeHtml(rowValue)}"
+                          />
+                        </td>
+                      `).join("")}
+                    </tr>
+                  `;
+                }).join("")}
+              </tbody>
+            </table>
+          </div>
+        `;
+      }
+
+      return `
+        <input
+          id="${id}"
+          name="${id}"
+          type="text"
+          placeholder="${placeholder}"
+          ${required}
+          data-question-id="${id}"
+        />
+      `;
+    }
+
+    function bindInputs() {
+      document.querySelectorAll("[data-question-id]").forEach(input => {
+        input.addEventListener("input", handleInputChange);
+        input.addEventListener("change", handleInputChange);
+      });
+    }
+
+    function handleInputChange(event) {
+      const input = event.target;
+      const questionId = input.dataset.questionId;
+      const question = getAllQuestions().find(item => item.id === questionId);
+
+      state.touched[questionId] = true;
+      state.answers[questionId] = readQuestionValue(question);
+
+      validateQuestion(question);
+      updateJsonPreview();
+    }
+
+    function readQuestionValue(question) {
+      if (!question) return null;
+
+      const selector = `[data-question-id="${CSS.escape(question.id)}"]`;
+
+      if (["text", "number", "date", "email", "url", "textarea", "select"].includes(question.type)) {
+        const input = document.querySelector(selector);
+        if (!input) return null;
+
+        if (question.type === "number") {
+          return input.value === "" ? null : Number(input.value);
+        }
+
+        return input.value;
+      }
+
+      if (["radio", "scale"].includes(question.type)) {
+        const checked = document.querySelector(`${selector}:checked`);
+        return checked ? checked.value : "";
+      }
+
+      if (question.type === "checkbox") {
+        return Array.from(document.querySelectorAll(`${selector}:checked`)).map(input => input.value);
+      }
+
+      if (question.type === "matrix") {
+        const result = {};
+        (question.rows || []).forEach(row => {
+          const rowValue = optionValue(row);
+          const checked = document.querySelector(`${selector}[data-matrix-row="${CSS.escape(rowValue)}"]:checked`);
+          result[rowValue] = checked ? checked.value : "";
+        });
+        return result;
+      }
+
+      const fallback = document.querySelector(selector);
+      return fallback ? fallback.value : "";
+    }
+
+    function isAnswered(question, value) {
+      if (!question.required) return true;
+
+      if (question.type === "checkbox") {
+        return Array.isArray(value) && value.length > 0;
+      }
+
+      if (question.type === "matrix") {
+        const rows = question.rows || [];
+        return rows.length > 0 && rows.every(row => Boolean(value?.[optionValue(row)]));
+      }
+
+      return value !== null && value !== undefined && String(value).trim() !== "";
+    }
+
+    function validateQuestion(question) {
+      if (!question) return true;
+
+      const value = readQuestionValue(question);
+      const valid = isAnswered(question, value);
+      const container = document.querySelector(`[data-question-id="${CSS.escape(question.id)}"].question`);
+      const error = document.getElementById(`error-${question.id}`);
+
+      if (container && error) {
+        container.classList.toggle("is-invalid", !valid && state.touched[question.id]);
+        error.style.display = !valid && state.touched[question.id] ? "block" : "none";
+      }
+
+      return valid;
+    }
+
+    function validateAll() {
+      let allValid = true;
+
+      getAllQuestions().forEach(question => {
+        state.touched[question.id] = true;
+        state.answers[question.id] = readQuestionValue(question);
+        const valid = validateQuestion(question);
+        if (!valid) allValid = false;
+      });
+
+      updateJsonPreview();
+      return allValid;
+    }
+
+    function buildPayload() {
+      const questions = getAllQuestions();
+
+      questions.forEach(question => {
+        state.answers[question.id] = readQuestionValue(question);
+      });
+
+      const answeredCount = questions.filter(question => isAnswered(question, state.answers[question.id])).length;
+      const requiredQuestions = questions.filter(question => question.required);
+      const requiredAnswered = requiredQuestions.filter(question => isAnswered(question, state.answers[question.id])).length;
+
+      return {
+        form: {
+          id: FORM_SCHEMA.id,
+          title: FORM_SCHEMA.title,
+          version: FORM_SCHEMA.version,
+          context: FORM_SCHEMA.context || {}
+        },
+        progress: {
+          totalQuestions: questions.length,
+          answeredQuestions: answeredCount,
+          requiredQuestions: requiredQuestions.length,
+          requiredAnswered: requiredAnswered,
+          completionPercent: questions.length ? Math.round((answeredCount / questions.length) * 100) : 100
+        },
+        answers: state.answers,
+        generatedAt: new Date().toISOString()
+      };
+    }
+
+    function updateProgress(payload) {
+      const percent = payload.progress.completionPercent;
+      progressBar.value = percent;
+      progressText.textContent = `${percent}%`;
+    }
+
+    function updateJsonPreview() {
+      const payload = buildPayload();
+      updateProgress(payload);
+      jsonPreview.textContent = JSON.stringify(payload, null, 2);
+    }
+
+    async function copyJson() {
+      const valid = validateAll();
+
+      if (!valid) {
+        const firstInvalid = document.querySelector(".is-invalid");
+        if (firstInvalid) firstInvalid.scrollIntoView({ behavior: "smooth", block: "center" });
+        alert("Existem campos obrigatórios pendentes. Preencha-os antes de copiar o JSON.");
+        return;
+      }
+
+      const payload = buildPayload();
+      const text = JSON.stringify(payload, null, 2);
+
+      try {
+        if (navigator.clipboard && window.isSecureContext) {
+          await navigator.clipboard.writeText(text);
+        } else {
+          const textarea = document.createElement("textarea");
+          textarea.value = text;
+          textarea.setAttribute("readonly", "");
+          textarea.style.position = "fixed";
+          textarea.style.left = "-9999px";
+          document.body.appendChild(textarea);
+          textarea.select();
+          const copied = document.execCommand("copy");
+          textarea.remove();
+          if (!copied) throw new Error("Fallback de cópia não suportado pelo navegador.");
+        }
+
+        alert("JSON copiado para a área de transferência.");
+      } catch (error) {
+        alert("Não foi possível copiar automaticamente. Use a prévia do JSON para copiar manualmente.");
+      }
+    }
+
+    function resetForm() {
+      const ok = confirm("Tem certeza que deseja limpar todas as respostas?");
+      if (!ok) return;
+
+      state.answers = {};
+      state.touched = {};
+      document.querySelectorAll("input, textarea, select").forEach(input => {
+        if (["checkbox", "radio"].includes(input.type)) {
+          input.checked = false;
+        } else {
+          input.value = "";
+        }
+      });
+      document.querySelectorAll(".is-invalid").forEach(item => item.classList.remove("is-invalid"));
+      document.querySelectorAll(".error").forEach(item => item.style.display = "none");
+      updateJsonPreview();
+    }
+
+    document.getElementById("copyJsonButton").addEventListener("click", copyJson);
+    document.getElementById("resetButton").addEventListener("click", resetForm);
+
+    renderForm();
+  </script>
+</body>
+</html>

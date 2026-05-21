@@ -75,7 +75,7 @@ Opções úteis:
 ```bash
 procedural-kernel export --storage save.sqlite --out world_bundle.json --no-events
 procedural-kernel export --storage save.sqlite --out world_bundle.json --event-limit 1000
-procedural-kernel export --storage save.sqlite --out world_bundle.json --world-version 0.1.2
+procedural-kernel export --storage save.sqlite --out world_bundle.json --world-version 0.1.3
 ```
 
 ## `benchmark`

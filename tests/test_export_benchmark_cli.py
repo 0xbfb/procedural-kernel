@@ -15,7 +15,7 @@ def test_export_json_bundle_contains_versioned_contract(tmp_path):
         bundle = export_json_bundle(store, seed="bundle", generated_at="2026-05-21T00:00:00Z")
 
     assert bundle["schema_version"] == "bundle.v1"
-    assert bundle["world_version"] == "0.1.2"
+    assert bundle["world_version"] == "0.1.3"
     assert bundle["seed"] == "bundle"
     assert bundle["metadata"]["storage"]["events"] == 5
     assert bundle["chunks"]

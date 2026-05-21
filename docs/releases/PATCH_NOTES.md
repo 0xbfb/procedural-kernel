@@ -1,5 +1,37 @@
 # Patch Notes
 
+## 0.1.3 — UBU ISO suite sync
+
+Data: 2026-05-21
+
+### Adicionado
+
+- `.gitignore` raiz com política de caches, bancos locais, venvs e `tools/ubu-version-governor/` dev-only.
+- `installer/install_menu.ps1` para seleção de canal/branch via PowerShell.
+- `scripts/generate-final-contract.py` para gerar contrato final de release sem depender do governor completo.
+- `tools/README.md` documentando a política dev-only do versionador.
+- Suíte UBU ISO completa em `docs/iso/ubu_iso_suite/`.
+- Checklists/templates ISO faltantes em `docs/`.
+- `docs/releases/PATCH-0.1.3.md` e `docs/releases/RELEASE-0.1.3.md`.
+
+### Alterado
+
+- Versão do pacote atualizada para `0.1.3`.
+- `DEFAULT_WORLD_VERSION`, `KERNEL_VERSION`, CLI `export --world-version` e `WorldConfig.world_version` alinhados para `0.1.3`.
+- `scripts/version/plan_version_chain.py` agora gera plano ISO/3.1E com stdlib.
+- `install.bat` e `scripts/install/windows-install.bat` não instalam mais o governor completo automaticamente.
+- `docs/releases/version-chain.json` atualizado para a release `0.1.3`.
+
+### Compatibilidade
+
+- Sem breaking changes intencionais no runtime Python.
+- Storage permanece `storage.v1`.
+- Bundle permanece `bundle.v1`.
+
+### Observação
+
+Se `tools/ubu-version-governor/` já estiver rastreado, remover do índice com `git rm -r --cached tools/ubu-version-governor`.
+
 ## 0.1.1 — Hardening UBU ISO
 
 Data: 2026-05-21

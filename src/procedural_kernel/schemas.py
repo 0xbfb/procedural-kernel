@@ -15,7 +15,7 @@ class WorldConfig(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
     seed: str = "procedural-kernel-dev"
-    world_version: str = "0.1.2"
+    world_version: str = "0.1.3"
     schema_version: str = "world.v1"
     snapshot_every_events: int = Field(default=1000, ge=1)
 

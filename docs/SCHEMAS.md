@@ -68,8 +68,8 @@ Gerado por `exporters/json_bundle.py`:
 ```json
 {
   "schema_version": "bundle.v1",
-  "world_version": "0.1.2",
-  "kernel_version": "0.1.2",
+  "world_version": "0.1.3",
+  "kernel_version": "0.1.3",
   "seed": "uv",
   "generated_at": "...",
   "metadata": {},

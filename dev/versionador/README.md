@@ -1,10 +1,10 @@
 ﻿# Versionador dev-only
 
-Esta pasta reserva a estrutura local do versionador, mas o programa real do versionador nao deve ser distribuido em patches nem releases.
+Esta pasta reserva a estrutura local do versionador.
 
-Somente estes arquivos devem ser versionados aqui:
+O programa real do versionador, builds, binÃ¡rios, runtimes, caches, zips, scripts gerados e arquivos temporÃ¡rios nÃ£o devem subir em patches, releases, nightly ou stable.
 
-- .gitignore
-- README.md
+Somente estes arquivos podem ser versionados:
 
-Binarios, scripts gerados, zips, builds, caches e runtimes devem permanecer locais.
+- `dev/versionador/.gitignore`
+- `dev/versionador/README.md`

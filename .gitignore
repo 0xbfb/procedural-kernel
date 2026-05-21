@@ -1,16 +1,46 @@
-# UBU Suite 0.3.1 — arquivos locais e temporários
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+
+# Builds / packaging
+build/
+dist/
+*.egg-info/
+
+# Virtualenvs
+.venv/
+venv/
+env/
+ENV/
+
+# Local runtime outputs
+.tmp/
+logs/*.log
+*.sqlite
+*.sqlite3
+*.db
+world_bundle.json
+
+# Environment files
 .env
-.env.local
-.env.*.local
+.env.*
+!.env.example
 
-# Versionador real permanece dev-only/local.
-dev/versionador/*
-!dev/versionador/.gitignore
-!dev/versionador/README.md
-
-*.tmp
-*.temp
-*.log
-*.cache
+# IDE / OS
+.vscode/
+.idea/
 .DS_Store
 Thumbs.db
+
+# UBU-ISO/3.1E dev-only tooling
+# O versionador/governor deve existir apenas na maquina de desenvolvimento.
+# Ele nao deve ser commitado dentro dos patches/releases deste projeto.
+tools/ubu-version-governor/

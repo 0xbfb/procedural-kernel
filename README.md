@@ -8,7 +8,7 @@ A estratégia central é simples:
 estado resolvido = base procedural determinística + patches derivados de eventos persistidos
 ```
 
-Esta release `0.1.2` mantém o kernel funcional da `0.1.1` e adiciona governança operacional com UBU-ISO/3.0 e UBU-ISO/3.1E.
+Esta release `0.1.3` mantém o kernel funcional, corrige arquivos faltantes do repositório e sincroniza a suíte UBU ISO mais recente.
 
 ## Índice
 
@@ -205,7 +205,7 @@ Todo patch deve:
 
 ## Versionamento UBU ISO/3.1E
 
-A partir da release `0.1.2`, o projeto inclui governança de versão compatível com a cadeia:
+A partir da release `0.1.3`, o projeto inclui governança de versão compatível com a cadeia:
 
 ```text
 patch > release > nightly > stable
@@ -252,3 +252,7 @@ make doctor
 make validate-version-chain
 make version-plan
 ```
+
+## 0.1.3
+
+Esta versão adiciona `.gitignore`, menu PowerShell auxiliar, contrato final de release, templates/checklists ISO completos e política dev-only para `tools/ubu-version-governor/`.

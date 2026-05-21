@@ -43,3 +43,7 @@ Todo patch deve atualizar `PATCH_MANIFEST.md` e `docs/releases/PATCH_NOTES.md`. 
 
 - [README principal](../README.md)
 - [AGENTS](../AGENTS.md)
+
+## Prompts e templates
+
+Os prompts e templates auxiliares do kit ficam em `docs/prompts/` para consulta, sem interferir no runtime do pacote.

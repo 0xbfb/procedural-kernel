@@ -230,7 +230,7 @@ def _build_parser() -> argparse.ArgumentParser:
     export.add_argument("--storage", "--db", dest="db", default="procedural_kernel.sqlite")
     export.add_argument("--out", required=True)
     export.add_argument("--seed", default="unknown")
-    export.add_argument("--world-version", default="0.1.2")
+    export.add_argument("--world-version", default="0.1.3")
     export.add_argument("--event-limit", type=int, default=None)
     export.add_argument("--no-events", action="store_true")
     export.add_argument("--no-snapshots", action="store_true")

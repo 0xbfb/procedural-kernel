@@ -1,6 +1,6 @@
 # AGENTS — Procedural Kernel
 
-Este projeto adota UBU-ISO/1.0, UBU-ISO/2.0 e UBU-ISO/2.1 a partir da release `0.1.1`.
+Este projeto adota UBU-ISO/1.0, UBU-ISO/2.0, UBU-ISO/2.1, UBU-ISO/3.0 e UBU-ISO/3.1E.
 
 ## Leitura obrigatória antes de alterar
 
@@ -234,13 +234,19 @@ O agente não pode:
 
 
 
+## Política de ferramentas de desenvolvimento
+
+- `tools/ubu-version-governor/` é uma ferramenta auxiliar de desenvolvimento local e deve permanecer ignorada pelo Git neste repositório.
+- Patches de release devem carregar apenas contratos, schemas, documentação e scripts pequenos necessários para validar/planejar versionamento.
+- Caso o governor completo seja necessário, instale-o fora do repositório ou em cópia local não versionada.
+
 ## UBU-ISO/3.0 e UBU-ISO/3.1E
 
-Ao fechar qualquer patch/release posterior à `0.1.2`:
+Ao fechar qualquer patch/release posterior à `0.1.3`:
 
 1. Atualize `pyproject.toml`, `src/procedural_kernel/__init__.py`, `WorldConfig.world_version`, `KERNEL_VERSION` e o default do CLI `export --world-version`.
 2. Atualize `docs/releases/version-chain.json` com a versão alvo, canais de promoção e mensagens de commit.
 3. Rode `python scripts/validate_version_chain.py docs/releases/version-chain.json`.
-4. Rode `PYTHONPATH=tools/ubu-version-governor/src python -m ubu_version_governor plan --input docs/releases/version-chain.json`.
+4. Rode `python scripts/version/plan_version_chain.py docs/releases/version-chain.json`.
 5. Não execute branch/tag/push real sem flag explícita e sem revisão humana.
 6. Mantenha `install.bat`, `run.bat`, `Makefile`, `Dockerfile` e `docker-compose.yml` sincronizados com o boot real do projeto.

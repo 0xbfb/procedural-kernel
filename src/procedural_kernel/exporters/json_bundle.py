@@ -15,8 +15,8 @@ from procedural_kernel.serialization import dumps
 from procedural_kernel.storage import SQLiteStore
 
 BUNDLE_SCHEMA_VERSION = "bundle.v1"
-DEFAULT_WORLD_VERSION = "0.1.2"
-KERNEL_VERSION = "0.1.2"
+DEFAULT_WORLD_VERSION = "0.1.3"
+KERNEL_VERSION = "0.1.3"
 
 
 def _utc_now_iso() -> str:

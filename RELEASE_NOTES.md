@@ -1,8 +1,8 @@
 # Release Notes
 
-## 0.1.2 — UBU ISO/3.0 + ISO/3.1E
+## 0.1.3 — UBU ISO/3.0 + ISO/3.1E
 
-A release `0.1.2` adiciona governança operacional de versão, inicializadores e cadeia `patch > release > nightly > stable`, sem alterar o core procedural.
+A release `0.1.3` adiciona governança operacional de versão, inicializadores e cadeia `patch > release > nightly > stable`, sem alterar o core procedural.
 
 Principais entregas:
 

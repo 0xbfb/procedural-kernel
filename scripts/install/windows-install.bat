@@ -25,8 +25,8 @@ echo.
 set /p UBU_CHOICE="Opcao: "
 
 if "%UBU_CHOICE%"=="0" exit /b 0
-if "%UBU_CHOICE%"=="1" set /p UBU_BRANCH="Branch patch, ex: patch/0.1.2: "
-if "%UBU_CHOICE%"=="2" set /p UBU_BRANCH="Branch release, ex: release/0.1.2: "
+if "%UBU_CHOICE%"=="1" set /p UBU_BRANCH="Branch patch, ex: patch/0.1.3: "
+if "%UBU_CHOICE%"=="2" set /p UBU_BRANCH="Branch release, ex: release/0.1.3: "
 if "%UBU_CHOICE%"=="3" set "UBU_BRANCH=nightly"
 if "%UBU_CHOICE%"=="4" set "UBU_BRANCH=stable"
 if "%UBU_CHOICE%"=="5" set /p UBU_BRANCH="Branch customizada: "
@@ -89,10 +89,6 @@ echo Instalando pacote em modo editavel...
 python -m pip install -e ".[dev]" >> "%LOG%" 2>&1
 if errorlevel 1 goto :install_error
 
-if exist "tools\ubu-version-governor\pyproject.toml" (
-  echo Instalando ferramenta UBU Version Governor local...
-  python -m pip install -e "tools\ubu-version-governor" >> "%LOG%" 2>&1
-)
 
 if exist "scripts\install\windows-run.bat" (
   copy /Y "scripts\install\windows-run.bat" "run.bat" >nul

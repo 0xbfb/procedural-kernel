@@ -1,17 +1,26 @@
-# Release Audit — Procedural Kernel 0.1.2
+# Release Audit — Procedural Kernel 0.1.3
 
-## Resultado
+## Resumo
 
-Release `0.1.2` gerada como hardening de governança operacional.
+Release `0.1.3` gerada para corrigir arquivos faltantes do repositório e sincronizar a suíte UBU ISO mais recente.
 
-## Escopo validado
+## Escopo
 
-- Kernel procedural mantido compatível com `0.1.2`.
-- ISO/3.0 aplicada com inicializadores e bootstrap.
-- ISO/3.1E aplicada com contrato JSON, schema, ferramenta de planejamento e menu de instalação.
+- Hardening de versionamento.
+- Sincronização documental ISO.
+- Inclusão de `.gitignore` e menu PowerShell.
+- Remoção da necessidade de versionar o governor completo dentro do projeto.
 
-## Riscos residuais
+## Risco
 
-- Execução real dos `.bat` não foi validada neste ambiente Linux.
-- Build com `python -m build` depende do módulo `build`, que pode não estar instalado no ambiente.
-- Push/branch/tag não foram executados; o contrato está preparado para dry-run/planejamento seguro.
+Baixo para runtime Python. A mudança afeta principalmente documentação, scripts auxiliares e governança de release.
+
+## Atenção operacional
+
+Como zips overlay não removem arquivos rastreados, executar manualmente:
+
+```bash
+git rm -r --cached tools/ubu-version-governor
+```
+
+caso a pasta esteja rastreada no repositório.

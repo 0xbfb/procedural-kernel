@@ -3,7 +3,7 @@ STORAGE ?= .tmp/procedural_kernel.sqlite
 SEED ?= makefile
 EVENTS ?= 100
 
-.PHONY: install test doctor simulate replay inspect export benchmark validate-version-chain version-plan clean
+.PHONY: install test doctor simulate replay inspect export benchmark validate-version-chain version-plan final-contract clean
 
 install:
 	$(PYTHON) -m pip install --upgrade pip
@@ -37,6 +37,9 @@ validate-version-chain:
 
 version-plan:
 	$(PYTHON) scripts/version/plan_version_chain.py
+
+final-contract:
+	$(PYTHON) scripts/generate-final-contract.py --input docs/releases/version-chain.json --output docs/releases/version-chain.final.json
 
 clean:
 	rm -rf .pytest_cache .ruff_cache build dist *.egg-info .tmp

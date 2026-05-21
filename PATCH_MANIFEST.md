@@ -1,64 +1,61 @@
-# PATCH_MANIFEST — Atualização para UBU Suite 0.3.1
+# Patch Manifest — Procedural Kernel 0.1.3
 
-## Base usada
+## Identificação
 
-Projeto antigo antes da padronização UBU Suite 0.3.1.
-
-## Objetivo
-
-Atualizar o projeto para o padrão UBU Suite 0.3.1, incluindo release governor, RepoUrl oficial do kit, ISO 3.1 e estrutura dev-only do versionador.
-
-## Repo oficial do kit
-
-https://github.com/0xbfb/ubu-suite.git
+- Projeto: `procedural-kernel`
+- Release anterior: `0.1.2`
+- Release gerada: `0.1.3`
+- Tipo: patch de hardening, arquivos faltantes e sincronização UBU ISO
 
 ## Arquivos criados
 
-- `release.ps1`
-- `patch-legacy.ps1`
-- `release.config.json`
-- `.env.example`
-- `.gitattributes`
-- `tools/release/git-release.ps1`
-- `tools/release/README.md`
-- `tools/patch/update-legacy-project.ps1`
-- `dev/versionador/.gitignore`
-- `dev/versionador/README.md`
-- `docs/GUIA_RELEASE_GIT_AUTOMATIZADO.md`
-- `docs/POLITICA_VERSIONADOR_DEV_ONLY.md`
-- `docs/POLITICA_ISO_STACK_AWARE.md`
-- `docs/UBU-ISO-3.1-RELEASE-GOVERNOR.md`
+- `.gitignore`
+- `installer/install_menu.ps1`
+- `scripts/generate-final-contract.py`
+- `tools/README.md`
+- `docs/releases/PATCH-0.1.3.md`
+- `docs/releases/RELEASE-0.1.3.md`
+- `docs/iso/ubu_iso_suite/**`
+- `docs/iso/3.1e-kit-output/**`
+- `docs/prompts/**`
+- checklists/templates ISO em `docs/`
 
-## Arquivos editados
+## Arquivos alterados
 
-- `.gitignore`, se já existia.
-- documentação existente, se necessário.
+- `pyproject.toml`
+- `src/procedural_kernel/__init__.py`
+- `src/procedural_kernel/schemas.py`
+- `src/procedural_kernel/exporters/json_bundle.py`
+- `src/procedural_kernel/cli.py`
+- `tests/test_export_benchmark_cli.py`
+- `Makefile`
+- `install.bat`
+- `scripts/install/windows-install.bat`
+- `scripts/version/plan_version_chain.py`
+- `AGENTS.md`
+- `README.md`
+- `RELEASE_NOTES.md`
+- `docs/README.md`
+- `docs/releases/PATCH_NOTES.md`
+- `docs/releases/RELEASE_NOTES.md`
+- `docs/releases/version-chain.json`
+- `examples/version-chain.example.json`
 
-## Arquivos removidos
+## Política dev-only
 
-Nenhum.
+`tools/ubu-version-governor/` não deve ser rastreado nesta release. Se já estiver versionado no repositório remoto, remover do índice com:
 
-## Arquivos intencionalmente não alterados
+```bash
+git rm -r --cached tools/ubu-version-governor
+```
 
-- Código de aplicação.
-- Configurações específicas da stack não relacionadas ao release governor.
-- Instaladores não utilizados.
-- Dockerfile, docker-compose.yml, Makefile, install.bat e run.bat, exceto se já existiam e fazem parte real da stack.
+## Validações previstas
 
-## Validações executadas
-
-- `git status --short`
-- `git diff --check`
-- `git ls-files dev/versionador`
-- busca por `working-tree-encoding`
-- conferência de `officialRepoUrl`
-- revisão manual dos scripts PowerShell
-
-## Riscos restantes
-
-- Os scripts PowerShell não foram executados neste ambiente Linux sem PowerShell instalado.
-- Em projetos com `.gitignore` existente, prefira aplicar via `patch-legacy.ps1`, pois ele preserva regras existentes e apenas adiciona o bloco UBU Suite 0.3.1.
-
-## Observações
-
-O versionador permanece dev-only e não deve ser empacotado em releases.
+```bash
+python -m compileall -q src tests scripts
+PYTHONPATH=src python -m pytest -q
+PYTHONPATH=src python -m procedural_kernel.cli doctor
+python scripts/validate_version_chain.py docs/releases/version-chain.json
+python scripts/version/plan_version_chain.py docs/releases/version-chain.json
+python scripts/generate-final-contract.py --input docs/releases/version-chain.json --output docs/releases/version-chain.final.json
+```
