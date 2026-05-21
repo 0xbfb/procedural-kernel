@@ -1,0 +1,16 @@
+# UBU Suite 0.3.1 — arquivos locais e temporários
+.env
+.env.local
+.env.*.local
+
+# Versionador real permanece dev-only/local.
+dev/versionador/*
+!dev/versionador/.gitignore
+!dev/versionador/README.md
+
+*.tmp
+*.temp
+*.log
+*.cache
+.DS_Store
+Thumbs.db

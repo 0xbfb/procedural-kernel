@@ -1,50 +1,64 @@
-# Patch Manifest — Procedural Kernel 0.1.2
+# PATCH_MANIFEST — Atualização para UBU Suite 0.3.1
 
-## Base
+## Base usada
 
-- Release anterior: `0.1.1`
-- Release gerada: `0.1.2`
-- Escopo: UBU-ISO/3.0 + UBU-ISO/3.1E
+Projeto antigo antes da padronização UBU Suite 0.3.1.
 
-## Arquivos novos/relevantes
+## Objetivo
 
-- `Makefile`
-- `Dockerfile`
-- `docker-compose.yml`
+Atualizar o projeto para o padrão UBU Suite 0.3.1, incluindo release governor, RepoUrl oficial do kit, ISO 3.1 e estrutura dev-only do versionador.
+
+## Repo oficial do kit
+
+https://github.com/0xbfb/ubu-suite.git
+
+## Arquivos criados
+
+- `release.ps1`
+- `patch-legacy.ps1`
+- `release.config.json`
 - `.env.example`
-- `.dockerignore`
-- `docs/UBU-ISO-3.0-INICIALIZADORES-E-BOOTSTRAP.md`
-- `docs/UBU-ISO-3.1E-COMMIT-VERSIONAMENTO.md`
-- `docs/CHECKLIST-ISO-3.1E.md`
-- `docs/MATRIZ-BRANCHES-TAGS.md`
-- `docs/TEMPLATE-VERSION-CHAIN-JSON.md`
-- `docs/PROMPT_FINAL_PATCH_VERSION_CHAIN.md`
-- `docs/iso/ISO_ADOPTION.md`
-- `docs/releases/version-chain.json`
-- `schemas/ubu-version-chain.schema.json`
-- `scripts/validate_version_chain.py`
-- `scripts/version/plan_version_chain.py`
-- `scripts/bootstrap_contract_check.py`
-- `tools/ubu-version-governor/`
-- `tests/test_version_chain.py`
+- `.gitattributes`
+- `tools/release/git-release.ps1`
+- `tools/release/README.md`
+- `tools/patch/update-legacy-project.ps1`
+- `dev/versionador/.gitignore`
+- `dev/versionador/README.md`
+- `docs/GUIA_RELEASE_GIT_AUTOMATIZADO.md`
+- `docs/POLITICA_VERSIONADOR_DEV_ONLY.md`
+- `docs/POLITICA_ISO_STACK_AWARE.md`
+- `docs/UBU-ISO-3.1-RELEASE-GOVERNOR.md`
 
-## Arquivos atualizados
+## Arquivos editados
 
-- `pyproject.toml`
-- `src/procedural_kernel/__init__.py`
-- `src/procedural_kernel/cli.py`
-- `src/procedural_kernel/schemas.py`
-- `src/procedural_kernel/exporters/json_bundle.py`
-- `README.md`
-- `AGENTS.md`
-- `install.bat`
-- `run.bat`
-- `scripts/install/windows-install.bat`
-- `scripts/install/windows-run.bat`
-- `RELEASE_NOTES.md`
-- `docs/RELEASE_CHECKLIST.md`
-- `docs/RELEASE_AUDIT.md`
+- `.gitignore`, se já existia.
+- documentação existente, se necessário.
 
-## Observação
+## Arquivos removidos
 
-Não houve alteração intencional no contrato de runtime do kernel procedural. A release fortalece bootstrap, documentação, versionamento e distribuição.
+Nenhum.
+
+## Arquivos intencionalmente não alterados
+
+- Código de aplicação.
+- Configurações específicas da stack não relacionadas ao release governor.
+- Instaladores não utilizados.
+- Dockerfile, docker-compose.yml, Makefile, install.bat e run.bat, exceto se já existiam e fazem parte real da stack.
+
+## Validações executadas
+
+- `git status --short`
+- `git diff --check`
+- `git ls-files dev/versionador`
+- busca por `working-tree-encoding`
+- conferência de `officialRepoUrl`
+- revisão manual dos scripts PowerShell
+
+## Riscos restantes
+
+- Os scripts PowerShell não foram executados neste ambiente Linux sem PowerShell instalado.
+- Em projetos com `.gitignore` existente, prefira aplicar via `patch-legacy.ps1`, pois ele preserva regras existentes e apenas adiciona o bloco UBU Suite 0.3.1.
+
+## Observações
+
+O versionador permanece dev-only e não deve ser empacotado em releases.

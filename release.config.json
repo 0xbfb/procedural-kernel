@@ -1,0 +1,38 @@
+﻿{
+    "schemaVersion":  "2.0",
+    "updatedAt":  "2026-05-21T09:11:39.5109754-03:00",
+    "version":  "0.3.1",
+    "kind":  "patch",
+    "title":  "Atualizacao para UBU Suite 0.3.1",
+    "description":  "Adiciona release governor, RepoUrl oficial do kit, ISO 3.1 e estrutura dev-only do versionador",
+    "tag":  "v0.3.1",
+    "project":  {
+                    "repoUrl":  "https://github.com/0xbfb/procedural-kernel.git",
+                    "remoteName":  "origin"
+                },
+    "kit":  {
+                "officialRepoUrl":  "https://github.com/0xbfb/ubu-suite.git",
+                "orchestrationSuiteVersion":  "0.3.1",
+                "iso":  "UBU-ISO-3.1"
+            },
+    "branches":  {
+                     "source":  "dev",
+                     "release":  "release/0.3.1",
+                     "nightly":  "nightly",
+                     "stable":  "stable"
+                 },
+    "messages":  {
+                     "commit":  "chore(patch): Atualizacao para UBU Suite 0.3.1 0.3.1",
+                     "tag":  "Atualizacao para UBU Suite 0.3.1 0.3.1 - Adiciona release governor, RepoUrl oficial do kit, ISO 3.1 e estrutura dev-only do versionador"
+                 },
+    "script":  {
+                   "name":  "tools/release/git-release.ps1",
+                   "version":  "0.3.1",
+                   "maintainedByIso":  "UBU-ISO-3.1"
+               },
+    "execution":  {
+                      "push":  true,
+                      "force":  true,
+                      "dryRun":  false
+                  }
+}
